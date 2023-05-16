@@ -1,0 +1,21 @@
+{
+  "name": "ptudw-22850034-eshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.2.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "jquery": "^3.7.0",
+    "nodemon": "^2.0.22",
+    "popper.js": "^1.16.1"
+  }
+}
