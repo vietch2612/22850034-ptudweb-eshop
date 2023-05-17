@@ -26,6 +26,7 @@ app.engine('hbs', expressHandlebars.engine({
 app.set('view engine', 'hbs');
 
 app.use('/', require('./routes/indexRouter'));
+app.use('/products', require('./routes/productsRouter'));
 
 app.use((request, respose, next) => {
 	respose.status(404).render('error', { message: 'File/Page not found!' });

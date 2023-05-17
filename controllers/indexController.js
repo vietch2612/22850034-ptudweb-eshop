@@ -42,7 +42,7 @@ controller.showHomepage = async (request, response) => {
 controller.showPage = (request, response, next) => {
     const pages = ['cart', 'checkout', 'contact', 'login', 'my-account', 'product-detail', 'product-list', 'wishlist'];
     if (pages.includes(request.params.page))
-        return response.render(resquest.params.page);
+        return response.render(request.params.page);
     next();
 }
 
