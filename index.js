@@ -4,12 +4,10 @@ const express = require('express');
 const expressHandlebars = require('express-handlebars');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Static folders
 app.use(express.static(__dirname + '/public'));
-
-
 
 // Express Handlebars
 app.engine('hbs', expressHandlebars.engine({
@@ -17,15 +15,21 @@ app.engine('hbs', expressHandlebars.engine({
 	partialsDir: __dirname + '/views/partials',
 	extname: 'hbs',
 	defaultLayout: 'layout',
+	runtimeOptions: {
+		allowProtoPropertiesByDefault: true
+	}
 }));
 app.set('view engine', 'hbs');
 
-app.get('/', (request, response) => {
-	response.render('index');
+app.use('/', require('./routes/indexRouter'));
+
+app.use((request, respose, next) => {
+	respose.status(404).render('error', { message: 'File/Page not found!' });
 });
 
-app.get('/:page', (request, response) => {
-	response.render(request.params.page)
+app.use((error, request, response, next) => {
+	console.error(error);
+	respose.status(500).render('error', { message: 'Internal Server Error' });
 });
 
 app.listen(port, () => {
