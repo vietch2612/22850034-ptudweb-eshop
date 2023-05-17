@@ -1,7 +1,10 @@
 'use strict';
 
 const controller = {};
+const sequelize = require('sequelize');
 const models = require('../models');
+
+const Op = sequelize.Op;
 
 controller.getData = async (request, response, next) => {
 	// Categories
@@ -55,6 +58,31 @@ controller.show = async (request, response) => {
 		}];
 	}
 
+	const keyword = request.query.keyword || '';
+	if (keyword.trim() != '') {
+		options.where.name = {
+			[Op.iLike]: `%${keyword}%`,
+		};
+	}
+
+	const sort = ['newest', 'price', 'popular'].includes(request.query.sort) ? request.query.sort : 'price';
+	switch (sort) {
+		case 'newest':
+			options.order = [['createdAt', 'DESC']];
+			break;
+		case 'popular':
+			options.order = [['stars', 'DESC']];
+			break;
+		default:
+			options.order = [['price', 'ASC']];
+	}
+
+	response.locals.sort = sort;
+	response.locals.originalUrl = removeParameter('sort', request.originalUrl);
+	if (Object.keys(request.query).length === 0) {
+		response.locals.originalUrl = response.locals.originalUrl + '?';
+	}
+
 	const products = await models.Product.findAll(options);
 	response.locals.products = products;
 	response.render('product-list');
@@ -82,5 +110,27 @@ controller.showDetails = async (request, response) => {
 	response.locals.product = product;
 	response.render('product-detail');
 };
+
+function removeParameter(key, sourceURL) {
+	let rtn = sourceURL.split('?')[0];
+	let parameter;
+	let parameters_array = [];
+	const queryString = (sourceURL.includes('?')) ? sourceURL.split('?')[1] : '';
+	if (queryString !== '') {
+		parameters_array = queryString.split('&');
+		for (let i = parameters_array.length - 1; i >= 0; i -= 1) {
+			parameter = parameters_array[i].split('=')[0];
+			if (parameter === key) {
+				parameters_array.splice(i, 1);
+			}
+		}
+
+		if (parameters_array.length > 0) {
+			rtn = rtn + '?' + parameters_array.join('&');
+		}
+	}
+
+	return rtn;
+}
 
 module.exports = controller;
