@@ -3,7 +3,7 @@
 const controller = {};
 const models = require('../models');
 
-controller.show = async (request, response) => {
+controller.getData = async (request, response, next) => {
 	// Categories
 	const categories = await models.Category.findAll({
 		include: [{
@@ -26,6 +26,10 @@ controller.show = async (request, response) => {
 	});
 	response.locals.tags = tags;
 
+	next();
+};
+
+controller.show = async (request, response) => {
 	// Products
 	const options = {
 		attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice'],
