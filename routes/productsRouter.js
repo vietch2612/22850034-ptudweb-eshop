@@ -7,6 +7,8 @@ const controller = require('../controllers/productsController');
 const cartController = require('../controllers/cartController.js');
 
 router.get('/', controller.getData, controller.show);
+
+router.get('/cart', cartController.show);
 router.get('/:id', controller.getData, controller.showDetails);
 
 router.post('/cart', cartController.add);

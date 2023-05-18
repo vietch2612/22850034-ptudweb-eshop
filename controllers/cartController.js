@@ -17,4 +17,9 @@ controller.add = async (request, response) => {
 	});
 };
 
+controller.show = (request, response) => {
+	response.locals.cart = request.session.cart.getCart();
+	return response.render('cart');
+};
+
 module.exports = controller;
