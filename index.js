@@ -2,7 +2,8 @@
 
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
-const { createStarList } = require('./controllers/handlebarsHelper');
+const {createPagination} = require('express-handlebars-paginate');
+const {createStarList} = require('./controllers/handlebarsHelper');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,11 +18,12 @@ app.engine('hbs', expressHandlebars.engine({
 	extname: 'hbs',
 	defaultLayout: 'layout',
 	runtimeOptions: {
-		allowProtoPropertiesByDefault: true
+		allowProtoPropertiesByDefault: true,
 	},
 	helpers: {
-		createStarList
-	}
+		createStarList,
+		createPagination,
+	},
 }));
 app.set('view engine', 'hbs');
 
@@ -29,12 +31,12 @@ app.use('/', require('./routes/indexRouter'));
 app.use('/products', require('./routes/productsRouter'));
 
 app.use((request, respose, next) => {
-	respose.status(404).render('error', { message: 'File/Page not found!' });
+	respose.status(404).render('error', {message: 'File/Page not found!'});
 });
 
 app.use((error, request, response, next) => {
 	console.error(error);
-	response.status(500).render('error', { message: 'Internal Server Error' });
+	response.status(500).render('error', {message: 'Internal Server Error'});
 });
 
 app.listen(port, () => {

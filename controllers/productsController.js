@@ -83,8 +83,22 @@ controller.show = async (request, response) => {
 		response.locals.originalUrl = response.locals.originalUrl + '?';
 	}
 
-	const products = await models.Product.findAll(options);
-	response.locals.products = products;
+	// Paging
+	const page = isNaN(request.query.page) ? 1 : Math.max(1, Number.parseInt(request.query.page));
+	const limit = 6;
+	options.limit = limit;
+	options.offset = limit * (page - 1);
+
+	const {rows, count} = await models.Product.findAndCountAll(options);
+	response.locals.pagination = {
+		page,
+		limit,
+		totalRows: count,
+		queryParams: request.query,
+	};
+
+	// Const products = await models.Product.findAll(options);
+	response.locals.products = rows;
 	response.render('product-list');
 };
 
