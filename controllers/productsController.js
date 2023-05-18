@@ -118,10 +118,35 @@ controller.showDetails = async (request, response) => {
 				model: models.User,
 				attributes: ['firstName', 'lastName'],
 			}],
+		},
+		{
+			model: models.Tag,
+			attributes: ['id'],
 		}],
 	});
 
 	response.locals.product = product;
+
+	const tagIds = [];
+	for (const tag of product.Tags) {
+		tagIds.push(tag.id);
+	}
+
+	const relatedProducts = await models.Product.findAll({
+		attributes: ['id', 'name', 'stars', 'imagePath', 'price', 'oldPrice'],
+		include: [{
+			model: models.Tag,
+			attributes: ['id'],
+			where: {
+				id: {
+					[Op.in]: tagIds,
+				},
+			},
+		}],
+		limit: 5,
+	});
+	response.locals.relatedProducts = relatedProducts;
+
 	response.render('product-detail');
 };
 
