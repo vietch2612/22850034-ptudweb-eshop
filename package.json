@@ -1,5 +1,8 @@
 {
   "name": "ptudw-22850034-eshop",
+  "engines": {
+    "node": "^19.7.0"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
