@@ -1,4 +1,5 @@
 'use strcit';
+require('dotenv').config();
 
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
@@ -9,7 +10,7 @@ const { createPagination } = require('express-handlebars-paginate');
 const { createStarList } = require('./controllers/handlebarsHelper');
 const { createClient } = require('redis');
 const redisClient = createClient({
-	url: 'redis://red-chjsj43hp8u4bdo88ca0:6379'
+	url: process.env.REDIS_URL
 });
 redisClient.connect().catch(console.error);
 
@@ -41,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Session
 app.use(session({
-	secret: 'S3secret',
+	secret: process.env.SESSION_SECRET,
 	store: new redisStore({ client: redisClient }),
 	resave: false,
 	saveUninitialized: false,
