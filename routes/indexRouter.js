@@ -9,7 +9,7 @@ router.get('/', controller.showHomepage);
 router.get('/:page', controller.showPage);
 
 // router.get('/createTables', (request, response) => {
-//     let models = require('./models');
+//     let models = require('../models');
 //     models.sequelize.sync().then(() => {
 //         response.send("tables created!!")
 //     });
