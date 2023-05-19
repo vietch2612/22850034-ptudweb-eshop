@@ -1,10 +1,16 @@
 {
   "development": {
-    "username": "postgres",
-    "password": null,
-    "database": "eshopDB",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "ptudweshopdb",
+    "password": "jmonC8r3f0YrxXcAqmgD9lbFcxjiSi4v",
+    "database": "ptudweshopdb",
+    "host": "dpg-chjsbr8rddlddrhsg4d0-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "required": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "root",
