@@ -83,3 +83,16 @@ async function clearCart() {
 		}
 	}
 }
+
+function placeorder(e) {
+	e.preventDefault();
+
+	const addressId = document.querySelector('input[name=adressId]:checked');
+	if (addressId.value == 0) {
+		if (!e.target.checkValidity()) {
+			e.target.reportValidity();
+		}
+	}
+
+	e.target.submit();
+}
