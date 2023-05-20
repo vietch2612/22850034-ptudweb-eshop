@@ -1,17 +1,6 @@
 {
-  "use_env_variable": "POSTGRESQL_URL",
   "development": {
-    "username": "ptudweshopdb",
-    "password": "jmonC8r3f0YrxXcAqmgD9lbFcxjiSi4v",
-    "database": "ptudweshopdb",
-    "host": "dpg-chjsbr8rddlddrhsg4d0-a.singapore-postgres.render.com",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "required": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "use_env_variable": "POSTGRESQL_URL"
   },
   "test": {
     "username": "root",
@@ -21,6 +10,7 @@
     "dialect": "postgres"
   },
   "production": {
+    "use_env_variable": "POSTGRESQL_URL",
     "username": "ptudweshopdb",
     "password": "jmonC8r3f0YrxXcAqmgD9lbFcxjiSi4v",
     "database": "ptudweshopdb",
