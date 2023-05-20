@@ -84,15 +84,17 @@ async function clearCart() {
 	}
 }
 
-function placeorder(e) {
+function placeorders(e) {
 	e.preventDefault();
 
-	const addressId = document.querySelector('input[name=adressId]:checked');
-	if (addressId.value == 0) {
+	const addressId = document.querySelector('input[name=addressId]:checked');
+	if (!addressId || addressId.value == 0) {
 		if (!e.target.checkValidity()) {
-			e.target.reportValidity();
+			return e.target.reportValidity();
 		}
 	}
+
+	console.log("AAAA");
 
 	e.target.submit();
 }
