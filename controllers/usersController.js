@@ -50,7 +50,6 @@ controller.placeorders = async (request, response) => {
             saveOrders(request, response, 'UNPAID')
             break;
     }
-    // return response.redirect('/users/checkout');
 }
 
 async function saveOrders(request, response, status) {
@@ -71,6 +70,7 @@ async function saveOrders(request, response, status) {
         });
     });
     await models.OrderDetail.bulkCreate(orderDetails);
+    await request.session.cart.clear();
     return response.render('error', { message: 'Thank you for your order! 22850034' });
 }
 
